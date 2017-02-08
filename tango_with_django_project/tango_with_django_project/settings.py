@@ -134,3 +134,6 @@ STATICFILES_DIRS = [STATIC_DIR, ]
 # Location to store uploaded media files
 MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = '/media/'
+
+
+LOGIN_URL = '/rango/login/'

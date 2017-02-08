@@ -10,6 +10,8 @@ from rango.forms import UserForm, UserProfileForm
 
 from django.contrib.auth import authenticate, login
 from django.core.urlresolvers import reverse
+from django.contrib.auth.decorators import login_required
+from django.conrib.auth import logout
 
 def index(request):
     # Query the database for a list of ALL categories currently stored.
@@ -119,7 +121,8 @@ def register(request):
         profile_form = UserProfileForm()
 
     return render(request, 'rango/register.html',
-                  {'user_form': user_form, 'profile_form': profile_form,
+                  {'user_form': user_form,
+                   'profile_form': profile_form,
                    'registered': registered})
 
 def user_login(request):
@@ -141,3 +144,12 @@ def user_login(request):
 
     else:
         return render(request, 'rango/login.html', {})
+
+@login_required
+def restricted(request):
+    return HttpResponse("Since you're loggen in, you can see this text!")
+
+@login_required
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('index'))
